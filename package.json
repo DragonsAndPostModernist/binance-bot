@@ -1,0 +1,37 @@
+{
+  "name": "binance-bot",
+  "version": "1.0.0.alpha",
+  "description": "simple tools for trading support",
+  "main": "index.js",
+  "scripts": {
+    "csv-parser": "node index.js  --analyzer",
+    "help": "node index.js --help",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://DragonsAndPostModernists@bitbucket.org/DragonsAndPostModernists/trading-tools.git"
+  },
+  "author": "benjamin keil\u001b[D\u001b[D",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/DragonsAndPostModernists/trading-tools#readme",
+  "dependencies": {
+    "align-text": "^1.0.2",
+    "binance-api-node": "^0.9.17",
+    "blessed": "^0.1.81",
+    "blessed-contrib": "^4.8.18",
+    "chalk": "^2.4.2",
+    "coinbase-pro": "^0.9.0",
+    "commander": "^5.0.0",
+    "csv-parser": "^2.3.1",
+    "dotenv": "^8.1.0",
+    "enquirer": "^2.3.4",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.5",
+    "node-binance-api": "^0.10.5",
+    "twit": "^2.2.11",
+    "twitter": "^1.7.1",
+    "twitter-stream-api": "^0.5.2",
+    "yargs": "^14.2.0"
+  }
+}

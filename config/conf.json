@@ -1,0 +1,6 @@
+{
+  "defaults": {
+    "currencyPair": "BTCEUR",
+    "strategy": "rsi"
+  }
+}
