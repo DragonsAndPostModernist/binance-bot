@@ -31,7 +31,7 @@ class BinanceWrapper {
                 });
             },
 
-            ticker:( service, pairs) =>{
+            ticker:( service, pairs) =>{q
                 this.binance.websockets.trades( pairs, ( trades ) => {
                     service.execute(	trades	);
                 });

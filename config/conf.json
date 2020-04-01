@@ -1,5 +1,9 @@
 {
+  "commands":["orderBook", "trade", "portfolio","alert-bot","data-poll","profit-target-calculator","strategy","binary-trade"],
   "defaults": {
+    "target": "targetPrice",
+    "initialAssetCapital": "0.0500",
+    "initialCurrencyCapital": "100",
     "currencyPair": "BTCEUR",
     "strategy": "rsi"
   }
