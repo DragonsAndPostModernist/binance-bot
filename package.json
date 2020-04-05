@@ -1,11 +1,10 @@
 {
   "name": "binance-bot",
-  "version": "1.0.0.alpha",
+  "version": "1.0.0",
   "description": "simple tools for trading support",
   "main": "index.js",
   "scripts": {
-    "csv-parser": "node index.js  --analyzer",
-    "help": "node index.js --help",
+    "help": "node binance-bot.js --help",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +19,7 @@
     "binance-api-node": "^0.9.17",
     "blessed": "^0.1.81",
     "blessed-contrib": "^4.8.18",
+    "ccxt": "^1.25.75",
     "chalk": "^2.4.2",
     "coinbase-pro": "^0.9.0",
     "columnify": "^1.5.4",
@@ -27,12 +27,18 @@
     "csv-parser": "^2.3.1",
     "dotenv": "^8.1.0",
     "enquirer": "^2.3.4",
+    "install": "^0.13.0",
     "lodash": "^4.17.15",
     "minimist": "^1.2.5",
+    "nedb": "^1.8.0",
     "node-binance-api": "^0.10.5",
+    "npm": "^6.14.4",
+    "technicalindicators": "^3.1.0",
+    "trendyways": "^0.8.0",
     "twit": "^2.2.11",
     "twitter": "^1.7.1",
     "twitter-stream-api": "^0.5.2",
+    "winston": "^3.2.1",
     "yargs": "^14.2.0"
   }
 }

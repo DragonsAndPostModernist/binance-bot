@@ -1,8 +1,8 @@
 let { BinanceWrapper }   = require("../service/BinanceWrapper");
 module.exports =  (program, conf) =>{
     program
-        .command('alert-bot [selector]')
-        .description('Configure a signal alert Notification [Telegram, email, Twitter]')
+        .command('binary-trade [selector]')
+        .description('Sell and Buy at given Amount(s) Effectively a Lmit and Stop Loss order,\nwithout placing anything in the exchanges Order Book')
         .option('--strategy <name>', 'Send alert based on strategy ', String, conf.defaults.currencyPair)
         .option('--currencyPair <name>', 'The Currency Pair to use', String, conf.defaults.currencyPair)
         .option('--price_below <number>', 'alert when price is below ?', Number, conf.defaults.initialCurrencyCapital)

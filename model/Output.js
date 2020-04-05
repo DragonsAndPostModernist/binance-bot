@@ -8,14 +8,45 @@ class Output {
         return new Output();
     }
 
+    static createOutputBuffer( params ){
+          let buffer = [];
+          buffer.push(Output.formatTime(new Date(params.time)));  
+         
+          buffer.push( (params.price > params.lastPrice ) ? "↑ "+Number(params.price).toFixed(2) : "↓ "+Number(params.price).toFixed(2) );
+          if( params.lastPrice === 0){ 
+            buffer.push( "+ 0.00" );
+          } 
+          else{
+              buffer.push( (params.price > params.lastPrice ) ? "+ "+Math.abs(params.price - params.lastPrice).toFixed(2) : "- "+Math.abs(params.price - params.lastPrice).toFixed(2) );
+          }
+          buffer.push(Number(params.volume).toFixed(6));
+          buffer.push((Number(params.rsi)));
+          buffer.push( (params.signal !== null ) ? params.signal : "");
+          buffer.push( params.asset)
+          buffer.push( params.currency)
+          buffer.push(Number(params.profit).toFixed(4));
+          buffer.push(Number(params.gainLoss).toFixed(4));
+          let pricecolor = (params.price > params.lastPrice ) ? "green" : "red";
+          let signalColor = (params.signal === "buy" ) ? "green" : "red";
+          let colors  ={ price:pricecolor , change:pricecolor, signal:signalColor  }
+          return { buffer, colors};
+    }
     static formatTime(date){
         let dateString = date.toISOString();
         dateString = dateString.replace("T"," ")
         return dateString.split(".")[0];
     }
-    constructor(){
+    constructor( strategyName, asset, currency ){
          this.renderCol = true;
-         this.header = ["Time               ","Price","Change","Volume","RSI","Signal","LTC","EUR","Profit","Gain Loss"];
+         this.header = ["Time               ","Price","Change","Volume",strategyName,"Signal",asset,currency,"Profit","Gain Loss"];
+         this.endTime = null;
+         this.setIntervalTime();
+    }
+
+    setIntervalTime(){
+         let date = new Date();
+         this.endTime = new Date();
+         this.endTime.setMinutes( date.getMinutes() + 1);
     }
 
     getHeader(){
@@ -26,43 +57,29 @@ class Output {
          return utils.stringFormatterAlign(arr);
     }
 
-    writeToStdOut(instance){
-       return columnify( instance , {
-           minWidth: 15,
-           config: {
-               description: {maxWidth: 20}
-           }
-       })
+    writeToStdOut(logInstance ,printHeader = true){
+        let buff = utils.stringFormatterAlignStart(logInstance.buffer);
+        let date = new Date();
+        //console.log(buff)
+        //  let colors  ={ price:pricecolor , change:pricecolor, signal:signalColor  }
+        // ["Time               ","Price","Change","Volume","RSI","Signal",asset,currency,"Profit","Gain Loss"];
+        buff[0] = color.grey(buff[0]);
+        buff[1] = color[logInstance.colors.price](buff[1]); 
+        buff[2] = color[logInstance.colors.change](buff[2]); 
+        buff[5] = color[logInstance.colors.signal](buff[5]); 
+        let header = utils.stringFormatterAlignColumns(this.getHeader(), buff);
+        if ( printHeader ) { console.log(color.grey(header.join(" ")));}
+       
+        if( date.getTime() > this.endTime.getTime()){
+            console.log( buff.join(" ") );
+            this.setIntervalTime();
+        }else{
+            process.stdout.write(buff.join(" ") + '\r'); 
+        }
     }
-
-    /*
-
-    *
-    * */
 }
 
-let test = () =>{
-     let outPut = Output.getInstance();
-     let testArray = [Output.formatTime(new Date()), "39.97","↑ 00.37","2.567",49.00, "Buy","2.9000","100.00","+ 2.00", "+ 2.00" ];
-     // let obj =[ {
-     //     Time: color.grey(Output.formatTime(new Date())),
-     //     "Current Price": color.yellow(Number("39.97").toFixed(2)),
-     //     Change:color.green("↑ 00.37"),
-     //     Volume:color.magenta("2.567"),
-     //     RSI:color.yellow("49.00"),
-     //     Signal:color.green("Buy"),
-     //     "Balance(Asset)":color.bgBlackBright("2.9000 LTC"),
-     //     "Balance(Currency)":color.bgBlackBright("100.00 EUR"),
-     //     Profit:color.green("+ 2.00"),
-     //     "Gain Loss":color.green("+ 200")
-     // }];
 
-     testArray = utils.stringFormatterAlignStart(testArray);
-     let header = utils.stringFormatterAlignColumns(outPut.getHeader(), testArray);
-     console.log(color.grey(header.join(" ")));
-     setInterval(()=>{
-         console.log(testArray.join(""))
-     }, 500);
-};
-
-test();
+module.exports = {
+    Output:Output
+}

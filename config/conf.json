@@ -4,7 +4,13 @@
     "target": "targetPrice",
     "initialAssetCapital": "0.0500",
     "initialCurrencyCapital": "100",
+    "sellStopPct":"0",
+    "buyStopPct":"0",
+    "fee":0.01,
+    "buySellPct":25,
+    "paperTrade":true,
     "currencyPair": "BTCEUR",
-    "strategy": "rsi"
+    "strategy": "rsi",
+    "interval":"30m"
   }
 }
