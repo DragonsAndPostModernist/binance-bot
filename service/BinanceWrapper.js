@@ -1,11 +1,62 @@
 const Binance = require('node-binance-api');
-
 class BinanceWrapper {
 
     static getInstance(){
         return new BinanceWrapper();
     }
 
+     privateApi( keys ){
+        return {
+            buyLimit:async ( pair, qty, price ) =>{
+                return await privateClient.buy(pair, qty, price);
+            },
+            sellLimit:async (pair, qty, price) =>{
+                return await privateClient.sell(pair, qty, price);
+            },
+            buyMarket:async ( pair, qty) =>{
+                return await privateClient(pair, qty);
+            },
+            sellMarket:async ( pair, qty) =>{
+                return await privateClient.marketBuy(pair, qty);
+            },
+            buyStop:async (pair, price, qty, stopParams) =>{
+                // {stopPrice: stopPrice, type: type}
+                return await privateClient.buy(pair, qty, price, stopParams );
+            },
+            sellStop:async ( pair, price, qty, stopParams ) =>{
+                return await privateClient.sell(pair, qty, price, stopParams);
+            },
+            cancelOrderById:async (pair, orderId)=>{
+                return await privateClient.cancel(pair, orderId);
+            },
+            cancelOrders:async( pair )=>{
+                return await privateClient.cancel(pair);
+            },
+            orders:async( pair = null )=>{
+                return await privateClient.openOrders( pair );
+            },
+            orderStatus:async(orderId)=>{
+                return await privateClient.orderStatus( orderId );
+            },
+            trades:async( pair )=>{
+                let privateClient = await this.privateClient( keys );
+                return await privateClient.trades( pair );
+            },
+            allOrders:async( pair )=>{
+                return await privateClient.allOrders( pair );
+            },
+            getDepositAddress:async(pair)=>{
+                return await privateClient.depositAddress( pair );
+            },
+            getDepositHistory:async( pair = null )=>{
+                return await privateClient.depositHistory( pair );
+            },
+
+            withdraw:async( pair, address, amount, addressTag =null ) =>{
+                return await privateClient.withdraw(pair, address, amount, addressTag);
+            }
+        }
+    }
     publicAPI(){
         return {
             candles:( service, pair, interval )=>{
@@ -59,6 +110,12 @@ class BinanceWrapper {
         }
     }
 
+    async privateClient(keys){
+        return new Binance({
+            APIKEY: keys.key,
+            APISECRET: keys.secret
+        });
+    }
     constructor(){
         this.binance = new Binance();
     }

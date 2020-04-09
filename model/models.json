@@ -1,0 +1,24 @@
+{
+  "keys": {
+    "key": null,
+    "secret": null,
+    "hook": "binance-bot",
+    "createdAt": null,
+    "updatedAt": null
+  },
+  "portFolio": {
+    "createdAt": null,
+    "updatedAt": null,
+    "symbol": null,
+    "transactions": []
+  },
+  "transaction": {
+    "createdAt": null,
+    "updatedAt": null,
+    "symbol": null,
+    "type": null,
+    "qty": null,
+    "price": null,
+    "fee": null
+  }
+}

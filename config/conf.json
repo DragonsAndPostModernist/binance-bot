@@ -8,9 +8,10 @@
     "buyStopPct":"0",
     "fee":0.01,
     "buySellPct":25,
-    "paperTrade":true,
+    "paperTrade":false,
     "currencyPair": "BTCEUR",
     "strategy": "rsi",
-    "interval":"30m"
+    "interval":"30m",
+    "alertMethod": "telegram"
   }
 }

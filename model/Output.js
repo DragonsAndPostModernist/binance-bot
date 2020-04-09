@@ -43,6 +43,33 @@ class Output {
          this.setIntervalTime();
     }
 
+    printTrades( trades ){
+        let buffer = [];
+
+        trades.forEach(trade => {
+                let type = "BUY ".green;
+                if(!trade.isBuyer){
+                    type ="SELL".red
+                }
+                if(trade.commissionAsset.length < 4){
+                    trade.commissionAsset = trade.commissionAsset+" ";
+                }
+                buffer.push(
+                    [
+                        "Symbol: ".cyan+ trade.symbol.yellow,
+                        "   ID    : ".cyan+ trade.orderId.toString().cyan,
+                        "   Buy  : ".cyan + type ,
+                        "   Price : ".cyan+ Number(trade.price).toFixed(2).yellow,
+                        "   Qty   : ".cyan+ Number(trade.qty).toFixed(8).blue,
+                        "   Fee   : ".cyan+ Number(trade.commission).toFixed(8).red + " " + trade.commissionAsset.yellow,
+                        "   Time  : ".cyan+ new Date(trade.time).toISOString().grey
+                    ]
+                )
+            }
+        );
+        buffer.forEach(entry => console.log(entry.join(" ")))
+        console.log("\n")
+    }
     setIntervalTime(){
          let date = new Date();
          this.endTime = new Date();
