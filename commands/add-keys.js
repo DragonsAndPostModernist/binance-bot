@@ -2,7 +2,7 @@
 const repo = require("../repository/Repository");
 const model = require("../model/models").keys;
 const colors = require("colors")
-module.exports =  (program, conf) =>{
+module.exports =  (program, app) =>{
     program
         .command('add-keys [selector]')
         .description('Store Api Keys')

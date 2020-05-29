@@ -1,0 +1,47 @@
+body {
+
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    font-family: 'Roboto', sans-serif;
+
+}
+html {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.pairScroll {
+	height: 400px;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.scroll {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+.borders {
+	border: 1px solid darkcyan;
+}
+
+.leftBorder {
+	border-left:1px solid darkcyan ;
+}
+
+.rightBorder {
+	border-right:1px solid darkcyan ;
+}
+
+.topBorder {
+	border-top:1px solid darkcyan ;
+}
+
+.bottomBorder{
+	border-bottom:1px solid darkcyan ;
+}
+
+.underLine{
+	text-decoration: underline
+}

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400&display=swap" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="./css/semantic/semantic.css" media="screen,projection" />
+    <link rel="stylesheet" type="text/css" href="./css/alertify/alertify.css">
+    <link rel="stylesheet" type="text/css" href="./css/colors.css">
+    <link rel="stylesheet" type="text/css" href="./css/app.css">
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body style="padding: 4px; background-color: rgb(41, 42, 42); font-family: 'Roboto', sans-serif;">
+    <!-- TradeOptions Modal Start 
+    
+     "orderTypes":["market", "limit", "stop"],
+        "orderType":"limit",
+        "stopLossPct":25,
+        "stopEntryPct":25,
+        "buyPct":100,
+        "sellPct":100,
+        "withStop":false,
+      }
+    -->
+    <div id="tradeOptionsModal" class="ui special modal">
+        <i class="close icon"></i>
+        <div class=" content">
+            <form class="ui form">
+                <h4 class="ui dividing header">Fast Trade Optios</h4>
+
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Buy Limit</label>
+                        <input type="text" name="card[number]" maxlength="16" placeholder="Card #">
+                    </div>
+                    <div class="four wide field">
+                        <label>Sell Limit</label>
+                        <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
+                    </div>
+                    <div class="four wide field">
+                        <label>Stop Limit</label>
+                        <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
+                    </div>
+                    <div class="four wide field">
+                        <label>Stop Entry</label>
+                        <input type="text" name="card[cvc]" maxlength="3" placeholder="CVC">
+                    </div>
+                </div>
+                <div class="four wide field">
+                <label>Order type</label>
+                    <select class="ui dropdown">
+                        <option value="limit">Limit</option>
+                        <option value="market">Market</option>
+                        <option value="stop">Stop</option>
+                    </select>
+                </div>
+                <div class="ui  segment">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input type="checkbox" name="gift" tabindex="0" class="hidden">
+                            <label>Check this to place a Stop loss/entry with each fast trade</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Cancel
+            </div>
+            <div class="ui green right labeled icon button">
+                Save
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+    <!-- TradeOptions Moal End -->
+    <!-- Bot Configuraton Modal Start
+     "strategy":"rsi",
+        "candleInterval":"30m", 
+        "pair":"BTCEUR",
+        "entryPrice":null,
+        "funds":15000,
+        "availableAsset":null,
+        "exchangeFee":0.1,
+        "buyPct":25,
+        "sellPct":25,
+        "limitBuy":3,
+        "limitSell":3,
+        "sellStopPct":24,
+        "sellStopPct":3,
+        "buyStopPct":3,
+        "lastTradeSide":"BUY",
+        "lastTrade":{},
+        "openOrders":{},
+        "isPaperTrade":true,
+        "runFor":"infinite",
+        "withStop":false,
+    
+    -->
+    <div id="botConfigurationModal" class="ui special modal">
+        <i class="close icon"></i>
+        <div class=" content">
+            <form class="ui form">
+                <h4 class="ui dividing header">Fast Trade Optios</h4>
+                <div class="twelve wide field">
+                    <label>Bot Name</label>
+                    <input id="botConfigName" type="text" placeholder="Unique name for Bot">
+                </div>
+                <div class="four wide field">
+                    <div class="ui toggle checkbox">
+                        <input id="botConfigExecTrades" type="checkbox"  tabindex="0" class="hidden">
+                        <label>Disable Trades</label>
+                    </div>
+                </div>
+                <div class="fields">
+
+                    <div class="four wide field">
+        
+                            <label>This Bot runs for</label>
+                            <div class="ui fluid search selection dropdown">
+                                <input type="hidden" name="country">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Infinite</div>
+                                <div id="runFor" class="menu">
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1m');">Infinite</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1m');">1 Minute</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '3m');">3 Minutes</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '5m');">5 Minutes</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '15m');">15 Minutes</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '30m');">30 Minutes</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1h');">1 hour</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '2h');">2 hours</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '4h');">4 hours</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '6h');">6 hours</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '8h');">8 hours</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '12h');">12 hours</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1d');">1 Day</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '3d');">3 Days</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1w');">1 Week</div>
+                                    <div class="item" onclick="setBotConfigValue('runFor', '1M');">1 Month</div>
+                                </div>
+                            </div>
+
+                    </div>
+                    <div class="four wide field">
+                        <label>Candle Interval</label>
+                        <div class="ui fluid search selection dropdown">
+                            <input type="hidden" name="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">30 Minutes</div>
+                            <div  class="menu">
+                                <div class="item" onclick="setBotConfigValue('candleInterval','3m');">3 Minutes</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','1m');">1 Minute</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','3m');">3 Minutes</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','5m');">5 Minutes</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','15m');">15 Minutes</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','30m');">30 Minutes</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','1h');">1 hour</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','2h');">2 hours</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','4h');">4 hours</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','6h');">6 hours</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','8h');">8 hours</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','12h');">12 hours</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','1d');">1 Day</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','3d');">3 Days</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','1w');">1 Week</div>
+                                <div class="item" onclick="setBotConfigValue('candleInterval','1M');">1 Month</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four wide field">
+                        <label>Strategies</label>
+                        <div class="ui fluid search selection dropdown">
+                            <input id="botConfigStrategy" type="hidden" name="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Strategies</div>
+                            <div id="strategies" class="menu">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="four wide field">
+                        <label>Pattern</label>
+                        <div class="ui fluid search selection dropdown">
+                            <input id="botConfigPattern" type="hidden" name="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Patterns</div>
+                            <div id="patterns" class="menu">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Buy Limit %</label>
+                        <input id="botConfigBuyLimit" type="number" value="3">
+                    </div>
+                    <div class="four wide field">
+                        <label>Sell Limit %</label>
+                        <input id="botConfigSellLimit" type="number" value="3">
+                    </div>
+                    <div class="four wide field">
+                        <label>Stop Limit %</label>
+                        <input id="botConfigStopLimit" type="number" value="3">
+                    </div>
+                    <div class="four wide field">
+                        <label>Stop Entry %</label>
+                        <input id="botConfigStopEntry" type="number" value="3">
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Available Funds on Exchange</label>
+                        <input id="botConfigAvailableFunds" type="number" value="00.00">
+                    </div>
+                    <div class="four wide field">
+                        <label>Available Asset on Exchange</label>
+                        <input id="botConfigAvailableAsset" type="number" value="00.00">
+                    </div>
+                    <div class="four wide field">
+                        <label>Exchange Fee</label>
+                        <input id="botConfigfee" type="number" value="00.00">
+                    </div>
+                    <div class="four wide field">
+                        <label>Symbol Pair</label>
+                        <div class="ui fluid search selection dropdown">
+                            <input type="hidden" name="country">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">BTC/EUR</div>
+                            <div id="botPairs" class="menu">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="four wide field">
+                        <label>Buy Percentage %</label>
+                        <input id="botConfigBuyPct" type="number" value="3">
+                    </div>
+                    <div class="four wide field">
+                        <label>Sell Percentage Percentage %</label>
+                        <input id="botConfigSellPct" type="number" value="3">
+                    </div>
+                    <div class="four wide field">
+                        <label>Last Trade Side</label>
+                        <select id="botConfigLastTradeSide" class="ui dropdown">
+                            <option value="">Side</option>
+                            <option value="buy">Buy</option>
+                            <option value="sell">Sell</option>
+                          </select>
+                    </div>
+                </div>
+                
+                <div class="fields">
+                <div class="four wide field">
+                        <div class="ui toggle checkbox">
+                            <input id="botConfigPaperTrade" type="checkbox"  tabindex="0" class="hidden">
+                            <label>This Bot is a Paper trade bot</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui  segment">
+                    <div class="field">
+                        <div class="ui toggle checkbox">
+                            <input id="botConfigWithStop" type="checkbox" tabindex="0" class="hidden">
+                            <label>Check this to place a Stop loss/entry with each fast trade</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="actions">
+            <div class="ui black deny button">
+                Cancel
+            </div>
+            <div class="ui green right labeled icon button" onclick="postBot();">
+                Save
+                <i class="checkmark icon"></i>
+            </div>
+        </div>
+    </div>
+    <!-- Bot Configuration Modal End-->
+    <!-- Simple Trade modal START-->
+    <div id="fastTrades" class="ui basic modal">
+        <div class="ui icon header">
+            <i class="chart line icon blue-text darken-3"></i>
+            <code class="grey-text">Rapid Response Trader</code>
+        </div>
+        <div class="content">
+            <code class="green-text darken-3"><span class="red-text">WARNING!&nbsp;</span>Trades are executed based on
+                preconfigured values available in the Bot Configuration.</code><br />
+            <code class="yellow-text darken-4">Before you proceed ensure that you are satisfied with the current
+                configuration <a onclick="openModal('tradeOptionsModal')">Click here to Configure Bot</a> </code>
+        </div>
+        <div class="actions">
+            <div class="ui grey basic cancel inverted button">
+                Cancel
+            </div>
+            <div class="ui green basic inverted button">
+                Buy
+            </div>
+            <div class="ui red basic inverted button">
+                Sell
+            </div>
+            <div class="ui green basic inverted button">
+                Stop Entry
+            </div>
+            <div class="ui red basic inverted button">
+                Stop Limit
+            </div>
+        </div>
+    </div>
+    <!-- Simple Trade modal END -->
+    <div style="padding: 15px;">
+        <div class="ui secondary  menu">
+            <h2 class="ui inverted item grey darken-3">
+                <span class="yellow-text text-darken-3">Binance</span> &nbsp;<span class="black-text">Bot</span>
+            </h2>
+            <div class="right menu">
+                <a id="login-tab" class="ui inverted item blue">
+                    Admin
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="ui grid" style="margin: 8px;">
+        <div class="ui top attached menu">
+            <div class="ui dropdown icon item">
+                <i class="wrench icon"></i>
+                <div class="menu">
+                    <div class="item" onclick="stream();">
+                        Start Trades Stream
+                    </div>
+                    <div class="item" onclick="stopStream();">
+                        Stop Trades Stream
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Alerts</span>
+                        <div class="menu">
+                            <div class="item">Price Alerts</div>
+                            <div class="item">Candlestick Alerts</div>
+                            <div class="item">Strategic Alerts</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Settings</span>
+                        <div class="menu">
+                            <div class="item">Strategies</div>
+                            <div class="item">Bot Config</div>
+                            <div class="item">Candlestick Patterns</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Tools</span>
+                        <div class="menu">
+                            <div class="item">
+                                Entry & Exit Calculator
+                            </div>
+                            <div class="item">
+                                Profit Target Calculator
+                            </div>
+                            <div class="item">
+                                Paper Trader
+                            </div>
+                            <div class="item">
+                                Non Automated Trading
+                            </div>
+                            <div class="item">
+                                Binary Trade Setup
+                            </div>
+                            <div class="item">
+                                Strategy Designer
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Account & Portfolio</span>
+                        <div class="menu">
+                            <div class="item">
+                                Portfolio Performance
+                            </div>
+                            <div class="item">
+                                Trade History
+                            </div>
+                            <div class="item">
+                                Order History
+                            </div>
+                            <div class="item">
+                                Open Orders
+                            </div>
+                            <div class="item">
+                                Trade History
+                            </div>
+                            <div class="item">
+                                Funding
+                            </div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="header">
+                        Other
+                    </div>
+                    <div class="item">
+                        <i class="dropdown icon"></i>
+                        <span class="text">Misc</span>
+                        <div class="menu">
+                            <div class="item">
+                                Simulator
+                            </div>
+                            <div class="item" onclick="setTradingView();">
+                                Trading View
+                            </div>
+                            <div class="item">
+                                API Key(s) Configuration
+                            </div>
+                            <div class="item">
+                                Documentation & Help
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right menu ">
+                <div class="field">
+                    <div class="ui fluid search selection dropdown">
+                        <input type="hidden" name="country">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">BTC/EUR</div>
+                        <div id="pairs" class="menu">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="dashboard" class="ui bottom attached segment grey darken-3" style="height:800px;">
+            <div class="ui grid" id="content">
+                <div class="eight wide column rightBorder">
+                    <!--    this.header = ["Time               ","Price","Change","Volume",strategyName,"Signal",asset,currency,"Funds","Profit","Gain Loss"];-->
+                    <div>
+                        <table class="ui very basic table">
+                            <tbody id="header">
+                                <tr>
+                                    <th class="grey-text lighten-3 "><small><code>Time</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Price</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Change</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Volume</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Change</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Strategy</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Signal</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Asset</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Currency</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Funds</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Profit</code></small></th>
+                                    <th class="grey-text lighten-3 "><small><code>Gain/Loss</code></small></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="height:400px;" class="scroll">
+                            <table class="ui very basic table">
+                                <tbody id="trades">
+                                    <tr id="index_0"></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="ui right pointing label">
+                        Fast Trade Options.
+                    </div>
+                    <i class="tasks icon large cyan-text" onclick="openModal('fastTrades')"></i>
+
+                </div>
+                <div class="eight wide column scroll" style="height:797px;">
+                <div id ="bots">
+                    
+                    <div class="ui negative message">
+                        <i class="close icon"></i>
+                        <div class="header">
+                           No Bots configured !
+                        </div>
+                        <p>Click on Add Bot to configure a trading Bot </p>
+                    </div>
+                    
+                </div>
+                <div class="ui mini menu">
+                    <a class="active item">
+                      Home of the Bot's
+                    </a>
+                    <div class="right menu">
+                      <div class="item">
+                          <div class="ui primary button" onclick="openModal('botConfigurationModal')">Add Bot</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div id="tv" style="height:800px;">
+            <br />
+            <div id="chartContent" style=" height: 100%">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_d7351"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                        new TradingView.widget({
+                            "width": document.getElementById('dashboard').clientWidth - 20,
+                            "height": document.getElementById('dashboard').clientHeight - 20,
+                            "symbol": "COINBASE:BTCEUR",
+                            "interval": "D",
+                            "timezone": "Etc/UTC",
+                            "theme": "Dark",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "withdateranges": true,
+                            "hide_side_toolbar": false,
+                            "hide_sidebar": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_d7351"
+                        });
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+        </div>
+        <br />
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/semantic/semantic.js"></script>
+    <script src="./js/fetch-and-catch.js"></script>
+    <script src="./js/Storage.js"></script>
+
+    <script src="./js/alertify/alertify.js"></script>
+    <script src="./js/Settings.js"></script>
+    <script src="./js/socket-io.js"></script>
+    <script src="./js/ui-hook.js"></script>
+    <script src="./js/component-handler.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/Models.js"></script>
+</body>
+
+</html>

@@ -15,6 +15,25 @@
             "args": [
                 "orderBook"
              ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "launch paperTrade",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}\\binance-bot.js",
+            "args": [
+                "trade-bot", 
+                "--currencyPair LTCUSDT",
+                "--paperTrade true", 
+                "--entryPrice 42.21",
+                "--availableAsset 2.5243",
+                "--exchangeFee 1",
+                "--buyPct 25",  
+                "--sellPct 25"
+             ]
         }
     ]
 }

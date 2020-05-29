@@ -1,7 +1,5 @@
-const technicalIndicators = require('technicalindicators');
-technicalIndicators.setConfig('precision', 10);
-let MACD =  technicalIndicators.MACD;
-const THRESHOLD_COUNT = 10;
+
+const { MacdIndicator } =  require("../indicators/Indicators");
 class Macd {
 
     static getInstance( closes, price ){
@@ -22,16 +20,7 @@ class Macd {
          let current = this.getMacd(this.closes);
     }
     getMacd(closes){
-        let macdInput = {
-            values            : closes,
-            fastPeriod        : 5,
-            slowPeriod        : 8,
-            signalPeriod      :  3,
-            SimpleMAOscillator: true,
-            SimpleMASignal    : true
-        };
-        let macd= new Macd(macdInput);
-        return macd.getResult();
+       return MacdIndicator.getData(closes);
     }
 }
 

@@ -1,16 +1,15 @@
-const technicalIndicators = require('technicalindicators');
-technicalIndicators.setConfig('precision', 10);
-let ATR =  technicalIndicators.ATR;
+const { AtrIndicator } =  require("../indicators/Indicators");
+let utils = require("../lib/Utils")
 const THRESHOLD_COUNT = 10;
 class Atr {
 
-    static getInstance( closes,highs,lows, price ){
-        return new Atr( closes,highs,lows, price ); 
+    static getInstance( candles, price ){
+        return new Atr ( candles, price ); 
     }
-    constructor( closes,highs,lows, price  ){
-        this.closes = closes;
-        this.highs = highs;
-        this.lows = lows;
+    constructor( candles, price  ){
+        this.closes = utils.closes(candles);
+        this.highs = utils.highs(candles);
+        this.lows = utils.lows(candles);
         this.price = Number(price);
         this.thresholdCount = 0;
     }
@@ -25,17 +24,18 @@ class Atr {
     }
     run( price ){
          this.updateBuffer( price );
-         let current = this.getATR(this.closes);
+         let current = this.getATR(this.highs, this.lows, this.closes);
+         let avgTrueRange = current[current.length -1];
+         if (avgTrueRange) {
+            
+         } else if (avgTrueRange) {
+            
+         } else {
+             return {signal: null, context: "atr", value: avgTrueRange, status: "pending"}
+         }
     }
     getATR(bufferH, bufferL, bufferC){
-        let inputATR = {
-            high : bufferH,
-            low  : bufferL,
-            close: bufferC,
-            period : 14
-        };
-        let atr = new ATR(inputATR);
-        return atr.getResult();
+       return AtrIndicator.getData( bufferH, bufferL, bufferC )
     }
 }
 

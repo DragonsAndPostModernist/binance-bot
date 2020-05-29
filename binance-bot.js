@@ -1,5 +1,4 @@
-let STREAM_LOCK = false;
-
+require('dotenv').config();
 const { Command } = require('commander');
 const program = new Command();
 const loader = require("./boot/boot.js") 
@@ -27,7 +26,7 @@ loader(app,args, (_app)=> {
         });
 
         commands.forEach((file) => {
-            require(path.resolve(__dirname, file.replace('.js', '')))(program, app.config)
+            require(path.resolve(__dirname, file.replace('.js', '')))(program, app)
         });
 
         program

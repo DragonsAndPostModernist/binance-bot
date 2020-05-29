@@ -1,10 +1,10 @@
 let { BinanceWrapper }   = require("../service/BinanceWrapper");
 let { DepthCacheService} = require("../service/serviceImp/DepthCacheService");
-module.exports =  (program, conf) =>{
+module.exports =  (program, app) =>{
      program
         .command('orderBook [selector]')
         .description('Stream a Maintained Order Book')
-        .option('--currencyPair <name>', 'The Currency Pair to use', String, conf.defaults.currencyPair)
+        .option('--currencyPair <name>', 'The Currency Pair to use', String, app.config.defaults.currencyPair)
         .action( (cmd,selector) => {
             let binanceWrapper =  BinanceWrapper.getInstance();
             let depthCacheService = new DepthCacheService();

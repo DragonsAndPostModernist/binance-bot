@@ -1,10 +1,8 @@
-const technicalIndicators = require('technicalindicators');
-technicalIndicators.setConfig('precision', 10);
-let RSI = technicalIndicators.RSI;
+
+const { RsiIndicator } =  require("../indicators/Indicators");
 const THRESHOLD_COUNT = 10;
-const STATE_PENDING ="state.determine";
-const STATE_SIGNALED_BUY ="state.signal.buy";
-const STATE_SIGNALED_SELL ="state.signal.sell";
+
+const STATE_PENDING ="state.pending.signal";
 const utils = require("../lib/Utils");
 
 class Rsi {
@@ -20,6 +18,8 @@ class Rsi {
         this.thresholdCount = 0;
         this.upperBound = 70;
         this.lowerBound = 30;
+        this.signalledSellSignal = false;
+        this.signalledBuySignal = false;
         this.state = "state.determine";
     }
 
@@ -34,24 +34,27 @@ class Rsi {
     }
 
     run(price) {
+        // let object = (require("../indicators/Indicators").PatternRecognitionIndicator);
+        // console.log(Object.getOwnPropertyNames(object).filter(prop => typeof object[prop] === "function"))
         this.updateBuffer(price);
         let currentRsi = this.getRSI(this.closes);
         let actualRsi = currentRsi[currentRsi.length - 1];
-        if (actualRsi <= this.lowerBound && ( this.state === STATE_PENDING || this.state === STATE_SIGNALED_BUY )) {
+        if (actualRsi <= this.lowerBound && !this.signalledBuySignal) {
             if (this.thresholdCount > THRESHOLD_COUNT) {
                 this.thresholdCount = 0;
-                this.state = STATE_SIGNALED_BUY;
+                this.signalledBuySignal = true;
+                this.signalledSellSignal = false;
                 return {signal: "Buy", context: "rsi", value: actualRsi, status: "resolved"}
-
             } else {
                 this.thresholdCount++;
                 return {signal: null, context: "rsi", value: actualRsi, status: "pending"}
 
             }
-        } else if (actualRsi >= this.upperBound && ( this.state === STATE_PENDING || this.state === STATE_SIGNALED_SELL )) {
+        } else if (actualRsi >= this.upperBound && !this.signalledSellSignal) {
             if (this.thresholdCount > THRESHOLD_COUNT) {
                 this.thresholdCount = 0;
-                this.state = STATE_SIGNALED_SELL;
+                this.signalledSellSignal = true;
+                this.signalledBuySignal = false;
                 return {signal: "Sell", context: "rsi", value: actualRsi, status: "resolved"}
             } else {
                 this.thresholdCount++;
@@ -62,13 +65,8 @@ class Rsi {
         }
     }
 
-    getRSI(buffer) {
-        let inputRSI = {
-            values: buffer,
-            period: 14
-        };
-        let rsi = new RSI(inputRSI);
-        return rsi.getResult();
+    getRSI( buffer ) {
+        return RsiIndicator.getData( buffer );
     }
 }
 

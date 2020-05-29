@@ -1,17 +1,22 @@
 {
   "commands":["orderBook", "trade", "portfolio","alert-bot","data-poll","profit-target-calculator","strategy","binary-trade"],
   "defaults": {
+    "pollTime":0,
     "target": "targetPrice",
     "initialAssetCapital": "0.0500",
+    "initialEntryPrice": "6800",
     "initialCurrencyCapital": "100",
-    "sellStopPct":"0",
-    "buyStopPct":"0",
-    "fee":0.01,
+    "sellStopPct":"0.05",
+    "buyStopPct":"0.05",
+    "buyPct":100,
+    "sellPct":100,
+    "fee":1,
     "buySellPct":25,
     "paperTrade":false,
     "currencyPair": "BTCEUR",
     "strategy": "rsi",
     "interval":"30m",
-    "alertMethod": "telegram"
+    "alertMethod": "telegram",
+    "lastTradeSide":"sell"
   }
 }

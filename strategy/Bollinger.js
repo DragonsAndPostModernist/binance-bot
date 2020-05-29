@@ -1,6 +1,4 @@
-const technicalIndicators = require('technicalindicators');
-technicalIndicators.setConfig('precision', 10);
-let BOLLINGER =  technicalIndicators.BollingerBands;
+const { BollingerIndicator } = require("../indicators/Indicators");
 const THRESHOLD_COUNT = 10;
 class Bollinger {
 
@@ -22,14 +20,7 @@ class Bollinger {
          let current = this.getBollinger(this.closes);
     }
     getBollinger(closes){
-        let input = {
-            period : 20,
-            values : closes,
-            stdDev : 2
-
-        };
-        let bb = new BB(input);
-        return bb.getResult();
+        return BollingerIndicator.getData( closes );
     }
   
 }

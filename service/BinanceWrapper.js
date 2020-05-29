@@ -8,23 +8,106 @@ class BinanceWrapper {
      privateApi( keys ){
         return {
             buyLimit:async ( pair, qty, price ) =>{
-                return await privateClient.buy(pair, qty, price);
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.buy( pair, qty,price, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             sellLimit:async (pair, qty, price) =>{
-                return await privateClient.sell(pair, qty, price);
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.sell( pair, qty,price, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             buyMarket:async ( pair, qty) =>{
-                return await privateClient(pair, qty);
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.marketBuy( pair, qty, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             sellMarket:async ( pair, qty) =>{
-                return await privateClient.marketBuy(pair, qty);
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.marketSell( pair, qty, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             buyStop:async (pair, price, qty, stopParams) =>{
-                // {stopPrice: stopPrice, type: type}
-                return await privateClient.buy(pair, qty, price, stopParams );
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.buy( pair, qty,price,{stopPrice: stopParams.stopPrice, type: stopParams.type}, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             sellStop:async ( pair, price, qty, stopParams ) =>{
-                return await privateClient.sell(pair, qty, price, stopParams);
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.sell( pair, qty,price,{stopPrice: stopParams.stopPrice, type: stopParams.type}, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
             cancelOrderById:async (pair, orderId)=>{
                 return await privateClient.cancel(pair, orderId);
@@ -33,23 +116,93 @@ class BinanceWrapper {
                 return await privateClient.cancel(pair);
             },
             orders:async( pair = null )=>{
-                return await privateClient.openOrders( pair );
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.openOrders( pair, (error, trades, pair) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:trades, error:null })
+                        });
+                    });
+                });
             },
-            orderStatus:async(orderId)=>{
-                return await privateClient.orderStatus( orderId );
+            orderStatus:async(pair, orderId)=>{
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.orderStatus(pair, orderId, (error, response) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:response, error:null })
+                        });
+                    });
+                });
             },
-            trades:async( pair )=>{
-                let privateClient = await this.privateClient( keys );
-                return await privateClient.trades( pair );
+            trades:( pair )=>{
+
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.trades( pair, (error, trades) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:trades, error:null })
+                        });
+                    });
+                });
             },
             allOrders:async( pair )=>{
-                return await privateClient.allOrders( pair );
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.allOrders( pair, (error, orders) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:orders, error:null })
+                        });
+                    });
+                });
             },
             getDepositAddress:async(pair)=>{
                 return await privateClient.depositAddress( pair );
             },
             getDepositHistory:async( pair = null )=>{
-                return await privateClient.depositHistory( pair );
+                return new Promise((resolve, reject)=>{
+                    const binance = new Binance({
+                        APIKEY: keys.key,
+                        APISECRET: keys.secret
+                    });
+                    binance.useServerTime(function() {
+                        binance.depositHistory( (error, history ) => {
+                            if ( error ) {
+                                console.error(error);
+                                process.exit(1);
+                            }
+                            resolve({ status:0, result:history, error:null })
+                        });
+                    });
+                });
             },
 
             withdraw:async( pair, address, amount, addressTag =null ) =>{
@@ -61,9 +214,12 @@ class BinanceWrapper {
         return {
             candles:( service, pair, interval )=>{
                 // Intervals: 1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M
-                 this.binance.candlesticks(pair, interval, (error, ticks, symbol) => {
-                     service.execute( ticks, interval, pair, this.binance );
-                 }, { limit: 500 });
+                return new Promise((resolve, reject)=>{
+                    this.binance.candlesticks(pair, interval, async (error, ticks, symbol) => {
+                        let response = await service.execute( ticks, interval, pair, this.binance );
+                        resolve( response )
+                    }, { limit: 500 });
+                })
              }
         }
     }
@@ -103,19 +259,16 @@ class BinanceWrapper {
                 });
             },
             get24HrStats:( pair =false )=>{
-                binance.websockets.prevDay(pair, ( error, response ) => {
+                this.binance.websockets.prevDay(pair, ( error, response ) => {
                     service.execute( response );
                 });
             },
+            getSocket:()=>{
+                return this.binance.websockets;
+            }
         }
     }
 
-    async privateClient(keys){
-        return new Binance({
-            APIKEY: keys.key,
-            APISECRET: keys.secret
-        });
-    }
     constructor(){
         this.binance = new Binance();
     }
