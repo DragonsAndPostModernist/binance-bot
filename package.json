@@ -7,7 +7,8 @@
     "paperTradeWithLimit": "node binance-bot trade-bot --currencyPair LTCUSDT --paperTrade true --entryPrice 43.05 --availableAsset 2.5243 --exchangeFee 1 --buyPct 100  --sellPct 100 --limitBuy  0.01 --limitSell 0.01",
     "paperTrade": "node binance-bot trade-bot --currencyPair LTCUSDT --paperTrade true --entryPrice 43.02 --availableAsset 2.5243 --exchangeFee 1 --buyPct 100  --sellPct 100",
     "whaleAlert": "node binance-bot alert-bot --whale-alert",
-    "simulator":"node binance-bot simulator --currencyPair LTCUSDT  --entryPrice 100  --exchangeFee 1 --buyPct 100  --sellPct 100 --strategy macd",
+    "simulator": "node binance-bot simulator --currencyPair LTCUSDT  --entryPrice 100  --exchangeFee 1 --buyPct 100  --sellPct 100 --strategy rsi --interval 4h --numSets 3 --availableAssetQty 0",
+    "simulator_nodb": "node binance-bot simulator --currencyPair LTCUSDT  --entryPrice 100  --exchangeFee 1 --buyPct 100  --sellPct 100 --strategy rsi --useDatabase true",
     "help": "node binance-bot.js --help",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

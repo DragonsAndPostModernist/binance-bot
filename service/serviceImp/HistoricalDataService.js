@@ -17,6 +17,7 @@ class HistoricalDataService extends ServiceInterface{
         super();
         this.buffer = [];
         this.pollTime = 0;
+        this.pollCount =0;
        
     }
     
@@ -27,18 +28,23 @@ class HistoricalDataService extends ServiceInterface{
         return utils.intervalMapper(interval, lastFirstCandle)
     }
     async execute( candles, interval, pair, binance ){
+        if( !candles.length ){
+            console.log("[ Error ]".red, "  Unable to pull Candles!".yellow)
+            process.exit(0)
+        }
         let endDate = this.calculateNextCandle(candles[0][0], interval)
        
-        if( this.pollTime <= POLL_INTERVAL ){
-            if ( this.pollTime === 0 ) {
+        if( this.pollTime > POLL_INTERVAL ){
+            if ( this.pollCount === 0 ) {
                 console.log( "pushing candles" )
                 this.buffer.push(...candles)
             }else{
                 this.buffer.unshift(...candles)
             } 
-            this.pollTime++;
+            this.pollCount++;
+            this.pollTime--;
             let ticks = await  binance.candlesticks(pair, interval, null,  { limit: 500, endTime:endDate })
-            this.execute( ticks, interval, pair, binance );
+            await this.execute( ticks, interval, pair, binance );
         }else{
             console.log( "=====>",this.pollTime, " POLL TIME ", POLL_INTERVAL  )
             let candleSticks = new Candlesticks( pair, this.buffer);
@@ -51,7 +57,9 @@ class HistoricalDataService extends ServiceInterface{
             if( possibleCandleSticks  === null ){
               await repository.add("candles", candleSticks );
             }else{
+                console.log( "updating")
                 await repository.update("candles", { _id:possibleCandleSticks._id }, candleSticks);
+                console.log( "updated")
                 return true;
             }
         }

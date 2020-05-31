@@ -4,8 +4,9 @@ const color = require("colors")
 const { ServiceInterface } = require("./ServiceInterface")
 const { Candlesticks } = require("../../model/Candlesticks");
 const repository = require("../../repository/Repository"); 
-let { IndicatorBuilder } = require("../IndicatorService");
-let { Candle } = require("../../model/Candle");
+let { IndicatorBuilder } = require("../../indicators/Indicators");
+let { Candle   }  = require("../../model/Candle");
+let { Strategy }  = require("../../strategy/Strategy");
 
 class SimulationService extends ServiceInterface {
 
@@ -26,20 +27,51 @@ class SimulationService extends ServiceInterface {
         this.sellStopPct   = null;
         this.buyStopPct    = null;
         this.history       = null;
+        this.useLimit = null;
+        this.useStop =null;
+        this.indicatorBuffer = [];
+        this.strategyService = null;
+        this.tradeFor = null;
+        this.qty = 0;
     }
     async configureStrategy() {
         this.history = (this.history === null) ? await repository.getBy("candles", { symbol: this.currencyPair }) : this.history;
     }
-    processCandle( candle ){
 
-    }
     async execute(){
-        this.configureStrategy();
+        await this.configureStrategy();
         console.log("");
         console.log(" Simulation Service ".green + " Pair: ".grey+" "+this.currencyPair.yellow);
-        let indicatorValues = IndicatorBuilder.bui
-        this.history.candles.forEach( candle => this.processCandle( candle ))
-        
+        this.indicatorBuffer = IndicatorBuilder.build(this.strategy, this.history.candles);
+        this.strategyService = Strategy.simulationFactory(this.strategy, this.tradeFor);
+        this.strategyService.setCandles( this.history.candles )
+            .setIndicators( this.indicatorBuffer)
+            .setExchangeData({
+                entryPrice: this.entryPrice,
+                exchangeFee:this.exchangeFee ,
+                buyPct:this.buyPct,
+                sellPct:this.sellPct,
+                limitBuy:this.limitBuy,
+                limitSell:this.limitSell,
+                sellStopPct:this.sellStopPct,
+                buyStopPct:this.buyStopPct,
+                useLimit:this.useLimit,
+                useStop:this.useStop,
+                qty:this.qty
+            })
+            .run()
+    }
+    setUseStop( val ){
+        this.useStop = val;
+        return this;
+    }
+    setQty( val ){
+        this.qty = val;
+        return this;
+    }
+    setUseLimit( val ){
+        this.useLimit = val;
+        return this;
     }
     setStrategy( val ){
         this.strategy = val;
@@ -48,6 +80,11 @@ class SimulationService extends ServiceInterface {
     }
     setCurrencyPair( val ){
         this.currencyPair = val;
+        return this;
+    }
+
+    setTradeFor( val ){
+        this.tradeFor = val;
         return this;
     }
     setEntryPrice( val ){

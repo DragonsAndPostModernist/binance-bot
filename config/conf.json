@@ -17,6 +17,7 @@
     "strategy": "rsi",
     "interval":"30m",
     "alertMethod": "telegram",
+    "tradeFor": "asset",
     "lastTradeSide":"sell"
   }
 }

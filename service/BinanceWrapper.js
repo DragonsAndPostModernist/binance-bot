@@ -216,6 +216,10 @@ class BinanceWrapper {
                 // Intervals: 1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M
                 return new Promise((resolve, reject)=>{
                     this.binance.candlesticks(pair, interval, async (error, ticks, symbol) => {
+                        if( error ){
+                            console.log("[ Error ]".red, error)
+                            process.exit(0)
+                        }
                         let response = await service.execute( ticks, interval, pair, this.binance );
                         resolve( response )
                     }, { limit: 500 });

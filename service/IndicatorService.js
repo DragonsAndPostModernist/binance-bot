@@ -13,7 +13,7 @@ let {
     KSTIndicator,
     WILLIAMSRIndicator,
     BreakoutSignaller
-} = require("../strategy/Strategy").Strategies.IndicatorMap();
+} = require("../strategy/Strategy").Strategy;
 
 const utils = require("../lib/Utils");
 

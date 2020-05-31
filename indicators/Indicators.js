@@ -266,7 +266,7 @@ class WilliamsRIndicator{
             close : bufferC,
         };
 
-        WWR = new WilliamsR(input);
+        let WWR = new WilliamsR(input);
         return WWR.getResult();
     }
 }
@@ -348,9 +348,9 @@ class Ema4Indicator{
 }
 class Ema3Indicator{
     static getData(close_buffer){
-        EMA1 = new  EMA({period : 9, values  : close_buffer});
-        EMA2 = new  EMA({period : 21, values : close_buffer});
-        EMA3 = new  EMA({period : 55, values : close_buffer});
+        let EMA1 = new  EMA({period : 9, values  : close_buffer});
+        let EMA2 = new  EMA({period : 21, values : close_buffer});
+        let EMA3 = new  EMA({period : 55, values : close_buffer});
         let object = {};
         let tmpBuffer = EMA1.getResult();
         object.ema1 = tmpBuffer;
@@ -616,7 +616,8 @@ module.exports = {
     ForceIndexIndiactor:ForceIndexIndiactor,
     RocIndicator:RocIndicator,
     PsarIndicator:PsarIndicator,
-    IndicatorUtils:IndicatorUtils
+    IndicatorUtils:IndicatorUtils,
+    IndicatorBuilder:IndicatorBuilder
 
 
-}
+};
