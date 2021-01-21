@@ -42,7 +42,7 @@
     "node-binance-api": "^0.10.5",
     "npm": "^6.14.4",
     "sanitizer": "^0.1.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "technicalindicators": "^3.1.0",
     "trendyways": "^0.8.0",
     "twit": "^2.2.11",
